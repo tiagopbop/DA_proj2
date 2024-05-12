@@ -7,9 +7,9 @@ add_executable(Da_proj2
         src/main.cpp
         src/menu.h
         src/menu.cpp
-        src/structs/shipping.h
-        src/structs/shipping.cpp
-        src/structs/stadium.h
-        src/structs/stadium.cpp
-        src/structs/tourism.h
-        src/structs/tourism.cpp)
+        src/structs/toy_sets.h
+        src/structs/toy_sets.cpp
+        src/structs/big_sets.h
+        src/structs/big_sets.cpp
+        src/structs/Graph.h
+)
