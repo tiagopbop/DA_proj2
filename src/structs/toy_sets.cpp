@@ -23,14 +23,14 @@ void Toyset::ReadLines(int decision) {
     switch(decision)
     {
         case 1:
-            input = "../data/shipping.csv";
+            input = "../data/toygraphs/shipping.csv";
             break;
         case 2:
-            input = "../data/stadiums.csv";
+            input = "../data/toygraphs/stadiums.csv";
             break;
 
         case 3:
-            input = "../data/tourism.csv";
+            input = "../data/toygraphs/tourism.csv";
             break;
 
         default: return;
@@ -43,7 +43,6 @@ void Toyset::ReadLines(int decision) {
 
     getline(MyReadFile, line);
 
-    vector<string> already_added;
     if(decision == 3){
 
         while (std::getline(MyReadFile, line)) {

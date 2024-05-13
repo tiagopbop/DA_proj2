@@ -9,7 +9,10 @@ add_executable(Da_proj2
         src/menu.cpp
         src/structs/toy_sets.h
         src/structs/toy_sets.cpp
-        src/structs/big_sets.h
-        src/structs/big_sets.cpp
         src/structs/Graph.h
+        src/structs/Realworld.h
+        src/structs/Realworld.h
+        src/structs/extra.h
+        src/structs/Realworld.cpp
+        src/structs/extra.cpp
 )
