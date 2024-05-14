@@ -6,6 +6,7 @@
 #define DA_PROJ2_TOY_SETS_H
 
 
+#include <unordered_set>
 #include "Graph.h"
 using namespace std;
 
@@ -13,7 +14,11 @@ class Toyset {
 public:
     void ReadLines(int decision);
 
-    Graph<string> toy_set;
+    Graph<int> toy_set;
+
+    void backtrack_tsp(vector<int>& current_path, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current);
+    void backtrack(Graph<int>& graph);
+
 };
 
 

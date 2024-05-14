@@ -11,9 +11,9 @@ using namespace std;
 
 int main()
 {
-   // Toyset toy_set;
- //   toy_set.ReadLines(3);
-   /* for(auto a: toy_set.toy_set.getVertexSet()) {
+    Toyset toy_set;
+    toy_set.ReadLines(2);
+    for(auto a: toy_set.toy_set.getVertexSet()) {
 
         for(auto b: a->getAdj())
         {
@@ -22,11 +22,11 @@ int main()
         }
 
 
-    }*/
-   Realworld realworld;
+    }
+ /*  Realworld realworld;
    HashNodes hashNodes;
-   hashNodes.Nodes_ReadLines(realworld,3);
-   realworld.Graph_ReadLines(3);
+   hashNodes.Nodes_ReadLines(realworld,1);
+   realworld.Graph_ReadLines(1);
    int count = 0;
    for(auto  a:realworld.realworld.getVertexSet())
    {
@@ -37,5 +37,17 @@ int main()
            if(count == 10) return 0;
        }
    }
+
+*/
+
+    for(auto a:toy_set.toy_set.getVertexSet())
+    {
+        a->setVisited(false);
+    }
+     Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
+     a->setVisited(true);
+
+
+    toy_set.backtrack(toy_set.toy_set);
     return  0;
 }
