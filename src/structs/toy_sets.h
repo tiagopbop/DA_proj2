@@ -16,7 +16,7 @@ public:
 
     Graph<int> toy_set;
 
-    void backtrack_tsp(vector<int>& current_path, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current);
+    void backtrack_tsp(vector<int>& current_path,double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current);
     void backtrack(Graph<int>& graph);
 
 };
