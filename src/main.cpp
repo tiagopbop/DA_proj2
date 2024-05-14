@@ -17,7 +17,7 @@ int main()
 
         for(auto b: a->getAdj())
         {
-            cout << a->getInfo() << "   " << b->getDest()->getInfo() << "   " << b->getWeight()<< endl;
+            //cout << a->getInfo() << "   " << b->getDest()->getInfo() << "   " << b->getWeight()<< endl;
 
         }
 
@@ -44,10 +44,24 @@ int main()
     {
         a->setVisited(false);
     }
-     Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
-     a->setVisited(true);
+    //RESPOSTA 4.1
+
+     //Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
+     //a->setVisited(true);
 
 
-    toy_set.backtrack(toy_set.toy_set);
-    return  0;
+    //toy_set.backtrack(toy_set.toy_set);
+    //return  0;
+
+    pair<vector<int>, double> tour = toy_set.triangularApproximation(toy_set.toy_set);
+
+    cout << "Tour: ";
+    for (const int& city : tour.first) {
+        cout << city << " ";
+    }
+    cout << endl;
+
+
+
+    return 0;
 }

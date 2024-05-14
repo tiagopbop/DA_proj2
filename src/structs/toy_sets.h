@@ -18,6 +18,7 @@ public:
 
     void backtrack_tsp(vector<int>& current_path, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current);
     void backtrack(Graph<int>& graph);
+    pair<vector<int>, double> triangularApproximation(Graph<int>& graph);
 
 };
 

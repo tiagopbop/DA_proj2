@@ -155,3 +155,55 @@ void Toyset::backtrack(Graph<int>& graph) {
     cout << "Cost: " << best_cost << endl;
 }
 
+pair<vector<int>, double> Toyset::triangularApproximation(Graph<int>& graph) {
+    vector<int> tour;
+    double total_distance = 0.0;
+
+    int starting_city = toy_set.getVertexSet().front()->getInfo();
+    tour.push_back(starting_city);
+
+    Vertex<int>* start_vertice = toy_set.findVertex(starting_city);
+    start_vertice->setVisited(true);
+
+    while(tour.size() < toy_set.getVertexSet().size()){
+        int current_city = tour.back();
+        Vertex<int>* current_city_vertice = toy_set.findVertex(current_city);
+        double min_distance = INF;
+        int nearest_neighbor;
+
+        for(const Edge<int>* edge : current_city_vertice->getAdj()){
+            Vertex<int>* adjacent_city_vertice = edge->getDest();
+            int adjacent_city = adjacent_city_vertice->getInfo();
+            if(!adjacent_city_vertice->isVisited()){
+                double distance = edge->getWeight();
+                if(distance < min_distance){
+                    min_distance = distance;
+                    nearest_neighbor = adjacent_city;
+                }
+            }
+        }
+
+        for(const Edge<int>* edge : current_city_vertice->getIncoming()){
+            Vertex<int>* adjacent_city_vertice = edge->getOrig();
+            int adjacent_city = adjacent_city_vertice->getInfo();
+            if(!adjacent_city_vertice->isVisited()){
+                double distance = edge->getWeight();
+                if(distance < min_distance){
+                    min_distance = distance;
+                    nearest_neighbor = adjacent_city;
+                }
+            }
+        }
+        total_distance = total_distance + min_distance;
+        tour.push_back(nearest_neighbor);
+        Vertex<int>* nearest_neighbor_vertice = toy_set.findVertex(nearest_neighbor);
+        nearest_neighbor_vertice->setVisited(true);
+    }
+    Vertex<int>* last_vertex_added = toy_set.findVertex(tour.back());
+    for(auto a : toy_set.getVertexSet()){
+
+    }
+    tour.push_back(starting_city);
+
+    return make_pair(tour, total_distance);
+}
