@@ -53,6 +53,7 @@ int main()
     //toy_set.backtrack(toy_set.toy_set);
     //return  0;
 
+
     pair<vector<int>, double> tour = toy_set.triangularApproximation(toy_set.toy_set);
 
     cout << "Tour: ";
@@ -60,7 +61,7 @@ int main()
         cout << city << " ";
     }
     cout << endl;
-
+    cout<<"Distance = "<<tour.second<<endl;
 
 
     return 0;

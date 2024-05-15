@@ -147,54 +147,25 @@ void Toyset::backtrack(Graph<int>& graph) {
 }
 
 pair<vector<int>, double> Toyset::triangularApproximation(Graph<int>& graph) {
-    vector<int> tour;
-    double total_distance = 0.0;
-
-    int starting_city = toy_set.getVertexSet().front()->getInfo();
-    tour.push_back(starting_city);
-
-    Vertex<int>* start_vertice = toy_set.findVertex(starting_city);
-    start_vertice->setVisited(true);
-
-    while(tour.size() < toy_set.getVertexSet().size()){
-        int current_city = tour.back();
-        Vertex<int>* current_city_vertice = toy_set.findVertex(current_city);
-        double min_distance = INF;
-        int nearest_neighbor;
-
-        for(const Edge<int>* edge : current_city_vertice->getAdj()){
-            Vertex<int>* adjacent_city_vertice = edge->getDest();
-            int adjacent_city = adjacent_city_vertice->getInfo();
-            if(!adjacent_city_vertice->isVisited()){
-                double distance = edge->getWeight();
-                if(distance < min_distance){
-                    min_distance = distance;
-                    nearest_neighbor = adjacent_city;
-                }
+    pair<vector<int>, double> tour;
+    vector<Vertex<int>*> visit_order = toy_set.prim();
+    tour.first.push_back(visit_order[0]->getInfo());
+    for(auto i = 1; i < visit_order.size(); i++){
+        tour.first.push_back(visit_order[i]->getInfo());
+        for(auto e : visit_order[i]->getAdj()){
+            if(e->getDest()->getInfo() == visit_order[i - 1]->getInfo()){
+                tour.second = tour.second + e->getWeight();
             }
         }
-
-        for(const Edge<int>* edge : current_city_vertice->getIncoming()){
-            Vertex<int>* adjacent_city_vertice = edge->getOrig();
-            int adjacent_city = adjacent_city_vertice->getInfo();
-            if(!adjacent_city_vertice->isVisited()){
-                double distance = edge->getWeight();
-                if(distance < min_distance){
-                    min_distance = distance;
-                    nearest_neighbor = adjacent_city;
-                }
-            }
+    }
+    for(auto e : visit_order[0]->getAdj()){
+        if(e->getDest()->getInfo() == tour.first.back()){
+            tour.second = tour.second + e->getWeight();
         }
-        total_distance = total_distance + min_distance;
-        tour.push_back(nearest_neighbor);
-        Vertex<int>* nearest_neighbor_vertice = toy_set.findVertex(nearest_neighbor);
-        nearest_neighbor_vertice->setVisited(true);
     }
-    Vertex<int>* last_vertex_added = toy_set.findVertex(tour.back());
-    for(auto a : toy_set.getVertexSet()){
+    tour.first.push_back(visit_order[0]->getInfo());
 
-    }
-    tour.push_back(starting_city);
 
-    return make_pair(tour, total_distance);
+    return tour;
+
 }

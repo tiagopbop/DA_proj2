@@ -9,6 +9,9 @@
 #include <queue>
 #include <limits>
 #include <algorithm>
+#include "../structs//MutablePriorityQueue.h"
+
+using namespace std;
 
 template <class T>
 class Edge;
@@ -34,6 +37,8 @@ public:
 
     void setInfo(T info);
     void setVisited(bool visited);
+    void setQueueIndex(int i);
+    int getQueueIndex();
     void setProcesssing(bool processing);
     void setIndegree(unsigned int indegree);
     void setDist(double dist);
@@ -129,6 +134,7 @@ public:
     bool isDAG() const;
     bool dfsIsDAG(Vertex<T> *v) const;
     std::vector<T> topsort() const;
+    std::vector<Vertex<T> *> prim() const;
 protected:
     std::vector<Vertex<T> *> vertexSet;    // vertex set
 
@@ -251,6 +257,16 @@ void Vertex<T>::setInfo(T in) {
 template <class T>
 void Vertex<T>::setVisited(bool visited) {
     this->visited = visited;
+}
+
+template <class T>
+void Vertex<T>::setQueueIndex(int i) {
+    this->queueIndex = i;
+}
+
+template <class T>
+int Vertex<T>::getQueueIndex() {
+    return this->queueIndex;
 }
 
 template <class T>
@@ -639,6 +655,69 @@ std::vector<T> Graph<T>::topsort() const {
     return res;
 }
 
+/****************** Prim's algorithm ********************/
+//=============================================================================
+// Prim's algorithm
+//=============================================================================
+// Function implementing Prim's algorithm to find the minimum spanning tree (MST) of a graph
+
+template <class T>
+std::vector<Vertex<T> *> Graph<T>::prim() const {
+    vector<Vertex<T>*> visit_order;
+
+    // Check if the graph is empty
+    if (vertexSet.empty()) {
+        return visit_order; // Return an empty set if the graph is empty
+    }
+
+    // Initialize the vertices in the graph
+    for(auto v : vertexSet) {
+        v->setDist(INF); // Set distance to infinity
+        v->setPath(nullptr); // Set path to null
+        v->setVisited(false); // Mark as not visited
+    }
+
+    // Select the first vertex as the starting point
+    Vertex<T>* s = vertexSet.front();
+    s->setDist(0); // Set distance of the starting vertex to 0
+
+    // Priority queue to store vertices based on their distances
+    MutablePriorityQueue<Vertex<T>> q;
+    q.insert(s);
+
+    // Main loop for the Prim's algorithm
+    while( ! q.empty() ) {
+        // Extract the vertex with the minimum distance from the priority queue
+        auto v = q.extractMin();
+        v->setVisited(true); // Mark the vertex as visited
+        visit_order.push_back(v);
+
+        // Iterate through the adjacent edges of the current vertex
+        for(auto &e : v->getAdj()) {
+            Vertex<T>* w = e->getDest(); // Get the destination vertex of the edge
+            // Check if the destination vertex is not visited
+            if (!w->isVisited()) {
+                auto oldDist = w->getDist(); // Get the current distance of the destination vertex
+                // Check if the weight of the edge is less than the current distance of the destination vertex
+                if(e->getWeight() < oldDist) {
+                    w->setDist(e->getWeight()); // Update the distance of the destination vertex
+                    w->setPath(e); // Update the path to the current edge
+                    // If the destination vertex had infinite distance, insert it into the priority queue
+                    if (oldDist == INF) {
+                        q.insert(w);
+                    }
+                        // If the destination vertex had finite distance, decrease its key in the priority queue
+                    else {
+                        q.decreaseKey(w);
+                    }
+                }
+            }
+        }
+    }
+    // Return the set of vertices after the Prim's algorithm completes
+    return visit_order;
+}
+
 inline void deleteMatrix(int **m, int n) {
     if (m != nullptr) {
         for (int i = 0; i < n; i++)
@@ -662,5 +741,7 @@ Graph<T>::~Graph() {
     deleteMatrix(distMatrix, vertexSet.size());
     deleteMatrix(pathMatrix, vertexSet.size());
 }
+
+
 
 #endif /* DA_TP_CLASSES_GRAPH */
