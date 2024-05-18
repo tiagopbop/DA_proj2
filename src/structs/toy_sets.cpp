@@ -86,43 +86,48 @@ void Toyset::ReadLines(int decision) {
     }
 }
 
+vector<vector<double>> Toyset::computeEdgeWeights(const Graph<int>& graph) {
+    int n = graph.getNumVertex();
+    vector<vector<double>> edge_weights(n, vector<double>(n, INF));
 
-
-void Toyset::backtrack_tsp(vector<int>& current_path,double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current) {
-
-    if (visited.size() == toy_set.getNumVertex()) {
-        bool possible = false;
-        for (auto& edge : toy_set.getVertexSet().front()->getAdj()) {
-            if (edge->getDest()->getInfo() == current_path.back()) {
-                current_cost += edge->getWeight();
-                possible = true;
-                break;
-            }
+    for (auto& vertex : graph.getVertexSet()) {
+        int u = vertex->getInfo();
+        for (auto& edge : vertex->getAdj()) {
+            int v = edge->getDest()->getInfo();
+            edge_weights[u][v] = edge->getWeight();
         }
+    }
 
-        if (current_cost < best_cost && possible) {
-            best_cost = current_cost;
-            best_path= current_path;
+    return edge_weights;
+}
+
+void Toyset::backtrack_tsp(vector<int>& current_path, double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current, const vector<vector<double>>& edge_weights) {
+    if (visited.size() == toy_set.getNumVertex()) {
+        if (edge_weights[current][0] < INF) {
+            current_cost += edge_weights[current][0]; // Add cost to return to start
+            if (current_cost < best_cost) {
+                best_cost = current_cost;
+                best_path = current_path;
+            }
         }
         return;
     }
 
-    for (auto& vertex : toy_set.getVertexSet()) {
-        for (auto& edge : vertex->getAdj())
-            if (edge->getOrig()->getInfo() == current && visited.find(edge->getDest()->getInfo()) == visited.end()) {
-                current_path.push_back(edge->getDest()->getInfo());
-                visited.insert(edge->getDest()->getInfo());
+    for (int next = 0; next < toy_set.getNumVertex(); ++next) {
+        if (visited.find(next) == visited.end() && edge_weights[current][next] < INF) {
+            visited.insert(next);
+            current_path.push_back(next);
 
-                backtrack_tsp(current_path,current_cost+edge->getWeight(), visited, best_path, best_cost, edge->getDest()->getInfo());
-
-                current_path.pop_back();
-                visited.erase(edge->getDest()->getInfo());
+            // Pruning: Skip further exploration if current cost exceeds best cost
+            if (current_cost + edge_weights[current][next] < best_cost) {
+                backtrack_tsp(current_path, current_cost + edge_weights[current][next], visited, best_path, best_cost, next, edge_weights);
             }
 
+            current_path.pop_back();
+            visited.erase(next);
+        }
     }
-
-    }
-
+}
 
 // Function to solve TSP using backtracking algorithm
 void Toyset::backtrack(Graph<int>& graph) {
@@ -135,7 +140,11 @@ void Toyset::backtrack(Graph<int>& graph) {
     unordered_set<int> visited;
     visited.insert(0);
     double current_cost = 0;
-    backtrack_tsp(current_path,current_cost, visited, best_path, best_cost, 0);
+
+    // Precompute edge weights
+    vector<vector<double>> edge_weights = computeEdgeWeights(graph);
+
+    backtrack_tsp(current_path, current_cost, visited, best_path, best_cost, 0, edge_weights);
 
     // Output the best path and its cost
     cout << "Best Path: ";
@@ -145,6 +154,7 @@ void Toyset::backtrack(Graph<int>& graph) {
     cout << "0" << endl; // Return to the starting node
     cout << "Cost: " << best_cost << endl;
 }
+
 
 pair<vector<int>, double> Toyset::triangularApproximation(Graph<int>& graph) {
     pair<vector<int>, double> tour;

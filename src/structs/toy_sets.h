@@ -15,8 +15,8 @@ public:
     void ReadLines(int decision);
 
     Graph<int> toy_set;
-
-    void backtrack_tsp(vector<int>& current_path,double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current);
+    void backtrack_tsp(vector<int>& current_path, double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current, const vector<vector<double>>& edge_weights);
+    vector<vector<double>> computeEdgeWeights(const Graph<int>& graph);
     void backtrack(Graph<int>& graph);
     pair<vector<int>, double> triangularApproximation(Graph<int>& graph);
 

@@ -14,7 +14,7 @@ int main()
     //menu::Terminal();
 
     Toyset toy_set;
-    toy_set.ReadLines(2);
+    toy_set.ReadLines(3);
     for(auto a: toy_set.toy_set.getVertexSet()) {
 
         for(auto b: a->getAdj())
@@ -25,12 +25,12 @@ int main()
 
 
     }
-   Realworld realworld;
-   HashNodes hashNodes;
-   hashNodes.Nodes_ReadLines(realworld,1);
-   hashNodes.Graph_ReadLines(1,hashNodes,realworld);
+  // Realworld realworld;
+   //HashNodes hashNodes;
+   //hashNodes.Nodes_ReadLines(realworld,1);
+   //hashNodes.Graph_ReadLines(1,hashNodes,realworld);
 
-   int count = 0;
+  /* int count = 0;
    for(auto  a:realworld.realworld.getVertexSet())
    {
        for(auto b: a->getAdj())
@@ -40,19 +40,21 @@ int main()
            if(count == 10) return 0;
        }
    }
+*/
 
-
-//    for(auto a:toy_set.toy_set.getVertexSet())
-  //  {
-    //    a->setVisited(false);
-    //}
+    for(auto a:toy_set.toy_set.getVertexSet())
+   {
+        a->setVisited(false);
+    }
     //RESPOSTA 4.1
 
-     //Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
-     //a->setVisited(true);
+     Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
+     a->setVisited(true);
 
-
-    //toy_set.backtrack(toy_set.toy_set);
+    double init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
+    toy_set.backtrack(toy_set.toy_set);
+    double time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
+    printf("The elapsed time was %f seconds\n", time);
     //return  0;
 
     /*
