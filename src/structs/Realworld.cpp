@@ -6,8 +6,45 @@
 #include <sstream>
 #include <string>
 #include "Realworld.h"
+#include <math.h>
 
-void Realworld::Graph_ReadLines(int decision) {
+const double R = 6371.0;
+
+double haversine(double lat1, double lon1, double lat2, double lon2) {
+    double dLat = (lat2 - lat1) * M_PI / 180.0;
+    double dLon = (lon2 - lon1) * M_PI / 180.0;
+    lat1 = lat1 * M_PI / 180.0;
+    lat2 = lat2 * M_PI / 180.0;
+
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+               cos(lat1) * cos(lat2) *
+               sin(dLon / 2) * sin(dLon / 2);
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+    return R * c;
+}
+bool HashNodes:: check_if(int id1, int id2, HashNodes hashNodes,Realworld realworld)
+{
+    const auto *it1 = hashNodes.findNode(id1) ;
+    const auto *it2 = hashNodes.findNode(id2) ;
+    for(auto a:realworld.realworld.getVertexSet())
+    {
+        if(a->getInfo()==it1->get_id())
+        {
+            for(auto ed: a->getAdj())
+            {
+                if(ed->getDest()->getInfo() == it2->get_id() && ed->getOrig()->getInfo()==it1->get_id()
+                ||ed->getDest()->getInfo() == it1->get_id() && ed->getOrig()->getInfo()==it2->get_id())
+                {
+                    return  true;
+                }
+            }
+        }
+    }
+
+
+    return false;
+}
+void HashNodes::Graph_ReadLines(int decision, HashNodes hashNodes, Realworld realworld) {
 
     string input;
     switch(decision)
@@ -42,11 +79,29 @@ void Realworld::Graph_ReadLines(int decision) {
         getline(ss, destino, ',');
         getline(ss, distancia, ',');
 
-        realworld.addEdge(stoi(origem),stoi(destino),stof(distancia));
+        realworld.realworld.addBidirectionalEdge(stoi(origem),stoi(destino),stof(distancia));
     }
 
+    for (const auto& a : realworld.realworld.getVertexSet()) {
+        for (const auto& b : realworld.realworld.getVertexSet()) {
+            if (a->getInfo() != b->getInfo()) {
+                int id1 = a->getInfo();
+                int id2 = b->getInfo();
 
+                bool edgeExists = check_if(id1,id2, hashNodes,realworld);
 
+                if (!edgeExists) {
+                    const Nodes* nodeA = hashNodes.findNode(id1);
+                    const Nodes* nodeB = hashNodes.findNode(id2);
+
+                    if (nodeA && nodeB) {
+                        double distance = haversine(nodeA->get_lat(), nodeA->get_lon(), nodeB->get_lat(), nodeB->get_lon());
+                        realworld.realworld.addBidirectionalEdge(id1, id2, distance);
+                    }
+                }
+            }
+        }
+    }
 }
 
 void HashNodes::Nodes_ReadLines(Realworld& realworld, int decision) {

@@ -12,7 +12,6 @@ using namespace std;
 
 class Realworld {
 public:
-    void Graph_ReadLines(int decision);
 
     Graph<int> realworld;
 };
@@ -53,6 +52,19 @@ class HashNodes{
 public:
     NodesTable nodesTable;
     static void Nodes_ReadLines(Realworld& realworld, int decision);
+    void Graph_ReadLines(int decision, HashNodes hashnodes, Realworld realworld);
+    bool check_if(int id1, int id2,HashNodes hashNodes, Realworld realworld);
+
+    const Nodes* findNode(const int& code) const{
+        Nodes dummy(code,1,1);
+        auto it = nodesTable.find(dummy);
+        if(it !=nodesTable.end())
+        {
+            return&(*it);
+        }
+        return nullptr;
+
+    }
 
 };
 

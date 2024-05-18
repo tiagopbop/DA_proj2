@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {
     Toyset toy_set;
-    toy_set.ReadLines(3);
+    toy_set.ReadLines(2);
     for(auto a: toy_set.toy_set.getVertexSet()) {
 
         for(auto b: a->getAdj())
