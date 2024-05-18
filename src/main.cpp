@@ -11,7 +11,7 @@ using namespace std;
 
 int main()
 {
-    menu::Terminal();
+    //menu::Terminal();
 
     Toyset toy_set;
     toy_set.ReadLines(2);
@@ -25,11 +25,12 @@ int main()
 
 
     }
- /*  Realworld realworld;
+   Realworld realworld;
    HashNodes hashNodes;
    hashNodes.Nodes_ReadLines(realworld,1);
-   realworld.Graph_ReadLines(1);
-   int count = 0;
+   hashNodes.Graph_ReadLines(1,hashNodes,realworld);
+
+    int count = 0;
    for(auto  a:realworld.realworld.getVertexSet())
    {
        for(auto b: a->getAdj())
@@ -40,7 +41,6 @@ int main()
        }
    }
 
-*/
 
     for(auto a:toy_set.toy_set.getVertexSet())
     {
@@ -55,7 +55,7 @@ int main()
     //toy_set.backtrack(toy_set.toy_set);
     //return  0;
 
-
+    /*
     pair<vector<int>, double> tour = toy_set.triangularApproximation(toy_set.toy_set);
 
     cout << "Tour: ";
@@ -64,7 +64,7 @@ int main()
     }
     cout << endl;
     cout<<"Distance = "<<tour.second<<endl;
-
+*/
 
     return 0;
 }

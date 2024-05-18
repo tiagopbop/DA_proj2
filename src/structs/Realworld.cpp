@@ -83,18 +83,22 @@ void HashNodes::Graph_ReadLines(int decision, HashNodes hashNodes, Realworld rea
     }
 
     for (const auto& a : realworld.realworld.getVertexSet()) {
+
         for (const auto& b : realworld.realworld.getVertexSet()) {
             if (a->getInfo() != b->getInfo()) {
+
                 int id1 = a->getInfo();
                 int id2 = b->getInfo();
 
                 bool edgeExists = check_if(id1,id2, hashNodes,realworld);
 
                 if (!edgeExists) {
+
                     const Nodes* nodeA = hashNodes.findNode(id1);
                     const Nodes* nodeB = hashNodes.findNode(id2);
 
                     if (nodeA && nodeB) {
+
                         double distance = haversine(nodeA->get_lat(), nodeA->get_lon(), nodeB->get_lat(), nodeB->get_lon());
                         realworld.realworld.addBidirectionalEdge(id1, id2, distance);
                     }
