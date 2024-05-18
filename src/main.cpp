@@ -11,6 +11,8 @@ using namespace std;
 
 int main()
 {
+    menu::Terminal();
+
     Toyset toy_set;
     toy_set.ReadLines(2);
     for(auto a: toy_set.toy_set.getVertexSet()) {
