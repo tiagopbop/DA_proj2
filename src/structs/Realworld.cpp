@@ -24,21 +24,11 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
 }
 bool HashNodes:: check_if(int id1, int id2, HashNodes hashNodes,Realworld realworld)
 {
-    const auto *it1 = hashNodes.findNode(id1) ;
-    const auto *it2 = hashNodes.findNode(id2) ;
-    for(auto a:realworld.realworld.getVertexSet())
+    const auto *it1 = realworld.realworld.findVertex(id1) ;
+    const auto *it2 = realworld.realworld.findVertex(id2) ;
+    for(auto a:it1->getAdj())
     {
-        if(a->getInfo()==it1->get_id())
-        {
-            for(auto ed: a->getAdj())
-            {
-                if(ed->getDest()->getInfo() == it2->get_id() && ed->getOrig()->getInfo()==it1->get_id()
-                ||ed->getDest()->getInfo() == it1->get_id() && ed->getOrig()->getInfo()==it2->get_id())
-                {
-                    return  true;
-                }
-            }
-        }
+        if(a->getDest()->getInfo()==it2->getInfo()) return true;
     }
 
 
@@ -168,3 +158,6 @@ float Nodes::get_lon() const {
 float Nodes::get_lat() const{
     return this->lat;
 }
+
+
+

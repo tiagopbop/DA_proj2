@@ -30,7 +30,7 @@ int main()
    hashNodes.Nodes_ReadLines(realworld,1);
    hashNodes.Graph_ReadLines(1,hashNodes,realworld);
 
-    int count = 0;
+   int count = 0;
    for(auto  a:realworld.realworld.getVertexSet())
    {
        for(auto b: a->getAdj())
@@ -42,10 +42,10 @@ int main()
    }
 
 
-    for(auto a:toy_set.toy_set.getVertexSet())
-    {
-        a->setVisited(false);
-    }
+//    for(auto a:toy_set.toy_set.getVertexSet())
+  //  {
+    //    a->setVisited(false);
+    //}
     //RESPOSTA 4.1
 
      //Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
