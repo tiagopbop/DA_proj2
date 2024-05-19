@@ -34,6 +34,9 @@ void Toyset::ReadLines(int decision) {
             input = "../data/toygraphs/tourism.csv";
             break;
 
+        case 4:
+            input = "../data/toygraphs/tourism2.csv";
+            break;
         default: return;
     }
 
@@ -44,7 +47,7 @@ void Toyset::ReadLines(int decision) {
 
     getline(MyReadFile, line);
 
-    if(decision == 3){
+    if(decision == 3 || decision == 4){
 
         while (std::getline(MyReadFile, line)) {
             stringstream ss(line);

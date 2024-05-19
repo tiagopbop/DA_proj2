@@ -12,8 +12,37 @@ using namespace std;
 
 class Realworld {
 public:
+    vector<int> tour;
 
     Graph<int> realworld;
+
+
+
+
+
+
+
+
+
+    void printTour(const vector<int> &path) const;
+
+
+    void solveTSP(int origin);
+
+    void
+    backtrack(int currentNode, vector<int> &tour, vector<bool> &visited, int numVisited, int totalCost, int optimalCost,
+              vector<int> &optimalPath);
+
+    vector<pair<int, int>> primMST(int start);
+
+    vector<int> findHamiltonianCycle(const Realworld &realworld, const vector<std::pair<int, int>> &mst,
+                                     const vector<std::pair<int, int>> &matching, int start);
+
+    vector<pair<int, int>> findMinimumMatching(const Realworld &realworld, const vector<int> &oddVertices);
+
+    vector<int> solveTSP(const Realworld &realworld, int start);
+
+    vector<pair<int, int>> primMST(const Realworld &realworld, int start);
 };
 
 

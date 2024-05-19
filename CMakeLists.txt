@@ -12,7 +12,5 @@ add_executable(Da_proj2
         src/structs/Graph.h
         src/structs/Realworld.h
         src/structs/Realworld.h
-        src/structs/extra.h
         src/structs/Realworld.cpp
-        src/structs/extra.cpp
 )
