@@ -186,7 +186,24 @@ int menu::Terminal() {
 
           break;
       case 4:
+          if(chs_fl!=1)
+          {
+              toyset.toy_set=realworld.realworld;
+          }
 
+                cin >> st;
+                init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
+
+                tour2 = toyset.TSP(toyset.toy_set);
+                time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
+
+                cout << "Tour: ";
+                for (const int& city : tour2.first) {
+                    cout << city << " ";
+                }
+                cout << endl;
+                cout<<"Distance = "<<tour2.second<<endl;
+                cout << "The elapsed time was %f seconds" << time << endl;
 
 
           break;
