@@ -14,7 +14,7 @@ int main()
     //menu::Terminal();
 
     Toyset toy_set;
-    toy_set.ReadLines(3);
+    toy_set.ReadLines(2);
     for(auto a: toy_set.toy_set.getVertexSet()) {
 
         for(auto b: a->getAdj())
@@ -47,7 +47,7 @@ int main()
         a->setVisited(false);
     }
     //RESPOSTA 4.1
-
+/*
      Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
      a->setVisited(true);
 
@@ -56,7 +56,7 @@ int main()
     double time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
     printf("The elapsed time was %f seconds\n", time);
     //return  0;
-
+*/
     /*
     pair<vector<int>, double> tour = toy_set.triangularApproximation(toy_set.toy_set);
 
@@ -67,6 +67,16 @@ int main()
     cout << endl;
     cout<<"Distance = "<<tour.second<<endl;
 */
+    int start = 0;
+    pair<vector<int>, double> tour = toy_set.nearestNeighborTSP(toy_set.toy_set, start);
+
+    cout << "Tour: ";
+    for (int city : tour.first) {
+        cout << city << " ";
+    }
+    cout << endl;
+    cout<<"Distance = "<<tour.second<<endl;
+
 
     return 0;
 }

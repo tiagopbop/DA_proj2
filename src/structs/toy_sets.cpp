@@ -177,5 +177,50 @@ pair<vector<int>, double> Toyset::triangularApproximation(Graph<int>& graph) {
 
 
     return tour;
-
 }
+
+
+pair<vector<int>, double> Toyset::nearestNeighborTSP(Graph<int>& graph, int start) {
+    vector<int> tour;
+    double totalDistance = 0;
+    int current = start;
+    Vertex<int>* current_vertex = graph.findVertex(current);
+    current_vertex->setVisited(true);
+    tour.push_back(current);
+
+    while (tour.size() < graph.getNumVertex()) {
+        Vertex<int>* currentVertex = graph.findVertex(current);
+        double minDistance = numeric_limits<double>::infinity();
+        int nextCity = -1;
+
+        for (auto edge : currentVertex->getAdj()) {
+            Vertex<int>* neighbor = graph.findVertex(edge->getDest()->getInfo());
+            if (!neighbor->isVisited() && edge->getWeight() < minDistance) {
+                minDistance = edge->getWeight();
+                nextCity = edge->getDest()->getInfo();
+            }
+        }
+
+        if (nextCity == -1) break; // No unvisited neighbor found (shouldn't happen in a fully connected graph)
+
+        tour.push_back(nextCity);
+        totalDistance += minDistance;
+        Vertex<int>* nextcity_vertex = graph.findVertex(nextCity);
+        nextcity_vertex->setVisited(true);
+        current = nextCity;
+    }
+
+    // Return to the starting point to complete the tour
+    Vertex<int>* lastVertex = graph.findVertex(current);
+    for (auto edge : lastVertex->getAdj()) {
+        if (edge->getDest()->getInfo() == start) {
+            totalDistance += edge->getWeight();
+            tour.push_back(start);
+            break;
+        }
+    }
+
+    return make_pair(tour, totalDistance);
+}
+
+

@@ -19,6 +19,7 @@ public:
     vector<vector<double>> computeEdgeWeights(const Graph<int>& graph);
     void backtrack(Graph<int>& graph);
     pair<vector<int>, double> triangularApproximation(Graph<int>& graph);
+    pair<vector<int>, double> nearestNeighborTSP(Graph<int>& graph, int start);
 
 };
 
