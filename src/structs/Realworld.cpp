@@ -23,7 +23,8 @@ const double R = 6371.0;
  * @param lon2 Longitude of the second point in degrees.
  * @return The distance between the two points in the same unit as the radius (R).
  *
- * @note The Earth's radius (R) should be defined before calling this function.
+ * @note The Earth's radius (R) should be defined before calling this function
+ * @note Time Complexity: O(1).
  * @see https://en.wikipedia.org/wiki/Haversine_formula
  */
 double haversine(double lat1, double lon1, double lat2, double lon2) {
@@ -38,20 +39,7 @@ double haversine(double lat1, double lon1, double lat2, double lon2) {
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
     return R * c;
 }
-/**
- * @brief Finds the minimum spanning tree (MST) of the Realworld graph using Prim's algorithm.
- *
- * Prim's algorithm is used to find the minimum spanning tree (MST) of a weighted graph.
- * This function takes a Realworld graph and a starting vertex and returns the edges
- * of the MST as a vector of pairs of vertex indices.
- *
- * @param realworld The Realworld graph.
- * @param start The index of the starting vertex for MST construction.
- * @return A vector of pairs representing the edges of the minimum spanning tree.
- *
- * @note The Realworld graph should be properly initialized before calling this function.
- * @see https://en.wikipedia.org/wiki/Prim%27s_algorithm
- */
+
 std::vector<std::pair<int, int>> Realworld::primMST(const Realworld& realworld, int start) {
     int n = realworld.realworld.getNumVertex();
     std::vector<bool> visited(n, false);
@@ -186,4 +174,132 @@ float Nodes::get_lon() const {
 
 float Nodes::get_lat() const {
     return this->lat;
+}
+
+std::vector<std::pair<int, int>> Realworld::findMinimumMatching(const Realworld& realworld, const std::vector<int>& oddVertices) {
+    int n = oddVertices.size();
+    std::vector<std::vector<double>> adjMatrix(n, std::vector<double>(n, std::numeric_limits<double>::max()));
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            for (auto ver : realworld.realworld.getVertexSet()) {
+                for (auto edge : ver->getAdj()) {
+                    if (edge->getDest()->getInfo() == oddVertices[j]) {
+                        adjMatrix[i][j] = adjMatrix[j][i] = edge->getWeight();
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    std::vector<bool> visited(n, false);
+    std::vector<std::pair<int, int>> matching;
+
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) {
+            double minWeight = std::numeric_limits<double>::max();
+            int minJ = -1;
+
+            for (int j = i + 1; j < n; j++) {
+                if (!visited[j] && adjMatrix[i][j] < minWeight) {
+                    minWeight = adjMatrix[i][j];
+                    minJ = j;
+                }
+            }
+
+            if (minJ != -1) {
+                visited[i] = visited[minJ] = true;
+                matching.emplace_back(oddVertices[i], oddVertices[minJ]);
+            }
+        }
+    }
+
+    return matching;
+}
+
+std::vector<int> Realworld::findHamiltonianCycle(const Realworld& realworld, const std::vector<std::pair<int, int>>& mst, const std::vector<std::pair<int, int>>& matching, int start) {
+    std::vector<int> tour;
+    std::vector<bool> visited(realworld.realworld.getNumVertex(), false);
+    std::unordered_set<int> visitedNodes;
+
+    int currentNode = start;
+    tour.push_back(start);
+    visited[start] = true;
+    visitedNodes.insert(start);
+
+    while (true) {
+        bool foundNextNode = false;
+
+        // First, try to find the next node in the MST
+        for (auto edge : realworld.realworld.findVertex(currentNode)->getAdj()) {
+            int nextNode = edge->getDest()->getInfo();
+            if (!visited[nextNode]) {
+                tour.push_back(nextNode);
+                visited[nextNode] = true;
+                visitedNodes.insert(nextNode);
+                currentNode = nextNode;
+                foundNextNode = true;
+                break;
+            }
+        }
+
+        // If no unvisited neighbor found in the MST, try the matching
+        if (!foundNextNode) {
+            for (auto matchedEdge : matching) {
+                int nextNode = (matchedEdge.first == currentNode) ? matchedEdge.second : matchedEdge.first;
+                if (!visited[nextNode]) {
+                    tour.push_back(nextNode);
+                    visited[nextNode] = true;
+                    visitedNodes.insert(nextNode);
+                    currentNode = nextNode;
+                    foundNextNode = true;
+                    break;
+                }
+            }
+        }
+
+        if (!foundNextNode) {
+            break;
+        }
+    }
+
+    if (visitedNodes.size() != realworld.realworld.getNumVertex()) {
+        return {};
+    }
+
+    return tour;
+}
+
+std::vector<int> Realworld::solveTSP(const Realworld& realworld, int start) {
+    std::vector<std::pair<int, int>> mst = primMST(realworld, start);
+    std::vector<int> oddVertices;
+
+    std::vector<int> degree(realworld.realworld.getNumVertex(), 0);
+    for (auto edge : mst) {
+        degree[edge.first]++;
+        degree[edge.second]++;
+    }
+
+    for (int i = 0; i < degree.size(); i++) {
+        if (degree[i] % 2 == 1)
+            oddVertices.push_back(i);
+    }
+
+    std::vector<std::pair<int, int>> matching = findMinimumMatching(realworld, oddVertices);
+
+    std::vector<int> tour = findHamiltonianCycle(realworld, mst, matching, start);
+
+    // Print the tour
+    if (tour.empty()) {
+        std::cout << "No feasible path exists!" << std::endl;
+    } else {
+        std::cout
+                << "Tour Path: ";
+        for (int node : tour) {
+            std::cout << node << " ";
+        }
+        std::cout << std::endl;
+    }
+    return tour;
 }

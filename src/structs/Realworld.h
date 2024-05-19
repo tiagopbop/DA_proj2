@@ -16,32 +16,69 @@ public:
 
     Graph<int> realworld;
 
+/**
+ * @brief Finds a minimum weight perfect matching for the given set of odd degree vertices.
+ *
+ * This function computes the minimum weight perfect matching for a given set of odd degree vertices
+ * using a greedy approach to select the minimum weight edges.
+ *
+ * @param realworld The input graph representing the cities and their distances.
+ * @param oddVertices A vector of vertices with odd degree in the minimum spanning tree.
+ * @return A vector of pairs representing the edges in the minimum weight perfect matching.
+ *
+ * @note The input graph should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^3)
+ */
+    vector<pair<int, int>> findMinimumMatching(const Realworld &realworld, const vector<int> &oddVertices);
 
-
-
-
-
-
-
-
-    void printTour(const vector<int> &path) const;
-
-
-    void solveTSP(int origin);
-
-    void
-    backtrack(int currentNode, vector<int> &tour, vector<bool> &visited, int numVisited, int totalCost, int optimalCost,
-              vector<int> &optimalPath);
-
-    vector<pair<int, int>> primMST(int start);
-
+/**
+ * @brief Finds a Hamiltonian cycle using the minimum spanning tree and minimum weight perfect matching.
+ *
+ * This function constructs a Hamiltonian cycle by combining the minimum spanning tree (MST) and
+ * the minimum weight perfect matching of the odd degree vertices in the MST.
+ *
+ * @param realworld The input graph representing the cities and their distances.
+ * @param mst The minimum spanning tree of the graph.
+ * @param matching The minimum weight perfect matching of the odd degree vertices in the MST.
+ * @param start The starting vertex for the Hamiltonian cycle.
+ * @return A vector representing the Hamiltonian cycle as a sequence of vertex indices.
+ *
+ * @note The input graph should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^2)
+ */
     vector<int> findHamiltonianCycle(const Realworld &realworld, const vector<std::pair<int, int>> &mst,
                                      const vector<std::pair<int, int>> &matching, int start);
 
-    vector<pair<int, int>> findMinimumMatching(const Realworld &realworld, const vector<int> &oddVertices);
-
+/**
+ * @brief Solves the Traveling Salesman Problem (TSP) using the Christofides algorithm.
+ *
+ * This function solves the Traveling Salesman Problem (TSP) using the Christofides algorithm, which
+ * involves constructing a minimum spanning tree (MST), finding a minimum weight perfect matching of
+ * the odd degree vertices in the MST, and combining them to form a Hamiltonian cycle.
+ *
+ * @param realworld The input graph representing the cities and their distances.
+ * @param start The starting vertex for the TSP tour.
+ * @return A vector representing the TSP tour as a sequence of vertex indices.
+ *
+ * @note The input graph should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^3)
+ */
     vector<int> solveTSP(const Realworld &realworld, int start);
-
+/**
+ * @brief Finds the minimum spanning tree (MST) of the Realworld graph using Prim's algorithm.
+ *
+ * Prim's algorithm is used to find the minimum spanning tree (MST) of a weighted graph.
+ * This function takes a Realworld graph and a starting vertex and returns the edges
+ * of the MST as a vector of pairs of vertex indices.
+ *
+ * @param realworld The Realworld graph.
+ * @param start The index of the starting vertex for MST construction.
+ * @return A vector of pairs representing the edges of the minimum spanning tree.
+ *
+ * @note The Realworld graph should be properly initialized before calling this function.
+ * Time Complexity: O((V + E) log V)
+ * @see https://en.wikipedia.org/wiki/Prim%27s_algorithm
+ */
     vector<pair<int, int>> primMST(const Realworld &realworld, int start);
 };
 

@@ -249,12 +249,7 @@ void Toyset::backtrackafterneareast(Graph<int>& graph, pair<vector<int>, double>
     }
 
     // Output the best path and its cost
-    cout << "Best Path: ";
-    for (int node : best_path) {
-        cout << node << " ";
-    }
-    cout << endl;
-    cout << "Cost: " << best_cost << endl;
+
 }
 
 pair<vector<int>, double> Toyset:: TSP(Graph<int> &graph) {

@@ -43,6 +43,7 @@ public:
  *
  * @note The function updates the best_path and best_cost parameters with the optimal path and its cost.
  *       The toy_set should be properly initialized before calling this function.
+ * @note Time Complexity: O(V!) This is the complexity of the brute-force backtracking solution for TSP.
  */
     void backtrack_tsp(vector<int>& current_path, double current_cost, unordered_set<int>& visited, vector<int>& best_path, double& best_cost, int current, const vector<vector<double>>& edge_weights);
     /**
@@ -56,6 +57,7 @@ public:
     * @return A 2D vector representing the edge weights matrix.
     *
     * @note The input graph should be properly initialized before calling this function.
+     * @nodes Time Complexity: O(V + E)
     */
     vector<vector<double>> computeEdgeWeights(const Graph<int>& graph);
     /**
@@ -80,6 +82,8 @@ public:
  * @return A pair containing the approximate TSP tour represented as a vector of vertex indices and its total cost.
  *
  * @note The toy_set should be properly initialized before calling this function.
+     * @note Time Complexity: O(V^2)
+
  */
     pair<vector<int>, double> triangularApproximation(Graph<int>& graph);
 /**
@@ -94,6 +98,7 @@ public:
  * @return A pair containing the approximate TSP tour represented as a vector of vertex indices and its total distance.
  *
  * @note The toy_set should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^2)
  */
     pair<vector<int>, double> nearestNeighborTSP(Graph<int>& graph, int start);
     /**
@@ -106,6 +111,7 @@ public:
  * @param tour A pair containing the TSP tour represented as a vector of vertex indices and its total distance.
  *
  * @note The toy_set should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^3)
  */
     void backtrackafterneareast(Graph<int>& graph, pair<vector<int>, double>& tour);
     /**
@@ -118,6 +124,7 @@ public:
  * @return A pair containing the TSP tour represented as a vector of vertex indices and its total distance.
  *
  * @note The toy_set should be properly initialized before calling this function.
+ * @note Time Complexity: O(V^3)
  */
     pair<vector<int>, double> TSP(Graph<int> &graph);
 };

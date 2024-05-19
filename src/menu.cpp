@@ -191,10 +191,10 @@ int menu::Terminal() {
               toyset.toy_set=realworld.realworld;
           }
 
-                cin >> st;
                 init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
 
                 tour2 = toyset.TSP(toyset.toy_set);
+
                 time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
 
                 cout << "Tour: ";
