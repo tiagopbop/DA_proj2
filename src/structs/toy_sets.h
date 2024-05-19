@@ -20,7 +20,8 @@ public:
     void backtrack(Graph<int>& graph);
     pair<vector<int>, double> triangularApproximation(Graph<int>& graph);
     pair<vector<int>, double> nearestNeighborTSP(Graph<int>& graph, int start);
-
+    void backtrackafterneareast(Graph<int>& graph, pair<vector<int>, double>& tour);
+    pair<vector<int>, double> TSP(Graph<int> &graph);
 };
 
 

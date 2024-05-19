@@ -201,7 +201,7 @@ pair<vector<int>, double> Toyset::nearestNeighborTSP(Graph<int>& graph, int star
             }
         }
 
-        if (nextCity == -1) break; // No unvisited neighbor found (shouldn't happen in a fully connected graph)
+        if (nextCity == -1) break;
 
         tour.push_back(nextCity);
         totalDistance += minDistance;
@@ -210,7 +210,7 @@ pair<vector<int>, double> Toyset::nearestNeighborTSP(Graph<int>& graph, int star
         current = nextCity;
     }
 
-    // Return to the starting point to complete the tour
+
     Vertex<int>* lastVertex = graph.findVertex(current);
     for (auto edge : lastVertex->getAdj()) {
         if (edge->getDest()->getInfo() == start) {
@@ -221,6 +221,44 @@ pair<vector<int>, double> Toyset::nearestNeighborTSP(Graph<int>& graph, int star
     }
 
     return make_pair(tour, totalDistance);
+}
+
+void Toyset::backtrackafterneareast(Graph<int>& graph, pair<vector<int>, double>& tour) {
+    double best_cost = tour.second;
+    vector<int> best_path = tour.first;
+
+    bool improved = true;
+    while (improved) {
+        improved = false;
+        for (int i = 0; i < tour.first.size()- 1; i++) {
+            for (int j = i + 2; j < tour.first.size(); j++) {
+                pair<vector<int>, double> newTour = tour;
+                reverse(newTour.first.begin() + i, newTour.first.begin() + j);
+                double new_cost = newTour.second;
+                if (new_cost < best_cost) {
+                    best_path = newTour.first;
+                    best_cost = new_cost;
+                    improved = true;
+                }
+            }
+        }
+        tour.first = best_path;
+    }
+
+    // Output the best path and its cost
+    cout << "Best Path: ";
+    for (int node : best_path) {
+        cout << node << " ";
+    }
+    cout << endl;
+    cout << "Cost: " << best_cost << endl;
+}
+
+pair<vector<int>, double> Toyset:: TSP(Graph<int> &graph) {
+    int start = 0;
+    pair<vector<int>, double> tour = nearestNeighborTSP(graph, start);
+    backtrackafterneareast(graph, tour);
+    return tour;
 }
 
 
