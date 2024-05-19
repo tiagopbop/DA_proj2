@@ -11,10 +11,10 @@ using namespace std;
 
 int main()
 {
-    //menu::Terminal();
+    menu::Terminal();
 
-    Toyset toy_set;
-    toy_set.ReadLines(2);
+   /* Toyset toy_set;
+    toy_set.ReadLines(4);
     for(auto a: toy_set.toy_set.getVertexSet()) {
 
         for(auto b: a->getAdj())
@@ -24,11 +24,12 @@ int main()
         }
 
 
-    }
-  // Realworld realworld;
-   //HashNodes hashNodes;
-   //hashNodes.Nodes_ReadLines(realworld,1);
-   //hashNodes.Graph_ReadLines(1,hashNodes,realworld);
+    }/*
+  Realworld realworld;
+    realworld.realworld= toy_set.toy_set;
+  //HashNodes hashNodes;
+  //hashNodes.Nodes_ReadLines(realworld,1);
+  //hashNodes.Graph_ReadLines(1,hashNodes,realworld);
 
   /* int count = 0;
    for(auto  a:realworld.realworld.getVertexSet())
@@ -41,20 +42,28 @@ int main()
        }
    }
 */
+  /*  double init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
+    int startNode = 0; // Change this to specify the starting node
+    std::vector<int> tour = realworld.solveTSP(realworld, startNode);
+
+    // Print the tour
+       double time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
+    printf("The elapsed time was %f seconds\n", time);
 
     for(auto a:toy_set.toy_set.getVertexSet())
    {
         a->setVisited(false);
-    }
+    }*/
     //RESPOSTA 4.1
 /*
      Vertex<int>* a = *toy_set.toy_set.getVertexSet().begin();
      a->setVisited(true);
-
-    double init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
-    toy_set.backtrack(toy_set.toy_set);
-    double time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
-    printf("The elapsed time was %f seconds\n", time);
+    Vertex<int>* b = *realworld.realworld.getVertexSet().begin();
+    b->setVisited(true);
+  //  double init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
+   // toy_set.backtrack(toy_set.toy_set);
+   // double time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
+    //printf("The elapsed time was %f seconds\n", time);
     //return  0;
 */
     /*
@@ -67,7 +76,7 @@ int main()
     cout << endl;
     cout<<"Distance = "<<tour.second<<endl;
 */
-    int start = 0;
+ /*   int start = 0;
     pair<vector<int>, double> tour = toy_set.nearestNeighborTSP(toy_set.toy_set, start);
 
     cout << "Tour: ";
@@ -76,7 +85,7 @@ int main()
     }
     cout << endl;
     cout<<"Distance = "<<tour.second<<endl;
-
+*/
 
     return 0;
 }
