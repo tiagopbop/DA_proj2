@@ -37,7 +37,7 @@ int menu::Terminal() {
 
     if (chs_fl == 1) {
         int toy;
-        cout << "\033[1;32mToyset chosen successfully\033[0m" << endl;
+        cout << "\033[1;32mToyset chosen successfully\033[0m" << endl << endl;
         cout << "\033[1;33mPlease select the file\033[0m" << endl;
         cout << "\033[1;33m[ 1 ]\033[0m" << " shipping.csv" << endl;
         cout << "\033[1;33m[ 2 ]\033[0m" << " stadiums.csv" << endl;
@@ -50,7 +50,7 @@ int menu::Terminal() {
 
     } else if (chs_fl == 2) {
         int real;
-        cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl;
+        cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl << endl;
         cout << "\033[1;33mPlease select the file\033[0m" << endl;
         cout << "\033[1;33m[ 1 ]\033[0m" << " graph1" << endl;
         cout << "\033[1;33m[ 2 ]\033[0m" << " graph2" << endl;
@@ -65,7 +65,7 @@ int menu::Terminal() {
      else if(chs_fl==3){
 
         int extra;
-        cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl;
+        cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl << endl;
         cout << "\033[1;33mPlease select the file\033[0m" << endl;
         cout << "\033[1;33m[ 1 ]\033[0m" << " 25edges" << endl;
         cout << "\033[1;33m[ 2 ]\033[0m" << " 400edges" << endl;
@@ -81,7 +81,7 @@ int menu::Terminal() {
         cout << "\033[1;33mUnrecognized answer - Proceeding with Toyset\033[0m" << endl;
         cout << endl;
         int toy;
-        cout << "\033[1;32mToyset chosen successfully\033[0m" << endl;
+        cout << "\033[1;32mToyset chosen successfully\033[0m" << endl << endl;
         cout << "\033[1;33mPlease select the file\033[0m" << endl;
         cout << "\033[1;33m[ 1 ]\033[0m" << " shipping.csv" << endl;
         cout << "\033[1;33m[ 2 ]\033[0m" << " stadiums.csv" << endl;
@@ -120,20 +120,14 @@ int menu::Terminal() {
                 {
                     a->setVisited(false);
                 }
-                cout << endl << endl;
 
                 init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
                 a = *toyset.toy_set.getVertexSet().begin();
                 a->setVisited(true);
                 toyset.backtrack(toyset.toy_set);
-                cout << "Tour: ";
-                for (const int& city : tour) {
-                    cout << city << " ";
-                }
-
 
                 time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
-                cout << "The elapsed time was %f seconds" << time << endl;
+                cout << "\033[1;33m[ The elapsed time was \033[0m" << time << "\033[1;33m seconds ]\033[0m" << endl << endl;
 
 
                 break;
@@ -147,13 +141,13 @@ int menu::Terminal() {
                 tour2 = toyset.triangularApproximation(toyset.toy_set);
                 time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
 
-                cout << "Tour: ";
+                cout << "\033[1;32m[ Tour ] \033[0m";
                 for (const int& city : tour2.first) {
                     cout << city << " ";
                 }
                 cout << endl;
-                cout<<"Distance = "<<tour2.second<<endl;
-                cout << "The elapsed time was %f seconds" << time << endl;
+                cout<< "\033[1;32m[ Distance ] \033[0m" << tour2.second << endl;
+                cout << "\033[1;33m[ The elapsed time was \033[0m" << time << "\033[1;33m seconds ]\033[0m" << endl << endl;
 
 
           break;
@@ -163,25 +157,23 @@ int menu::Terminal() {
           {
               toyset.toy_set=realworld.realworld;
           }
-                cout << endl << endl;
-                cout<<toyset.toy_set.getNumVertex();
-                cout << "\033[1;34mSelect strating node?\033[0m" << endl;
-                cout << "\033[1;34mDecision: \033[0m";
+                cout << "\033[1;34mSelect starting node: \033[0m";
 
 
                 cin >> st;
+                cout << endl;
                 init_time = ( ( (double) clock() ) / CLOCKS_PER_SEC);
 
                 tour2 = toyset.nearestNeighborTSP(toyset.toy_set,st);
                 time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
 
-                cout << "Tour: ";
+                cout << "\033[1;32m[ Tour ] \033[0m";
                 for (const int& city : tour2.first) {
                     cout << city << " ";
                 }
                 cout << endl;
-                cout<<"Distance = "<<tour2.second<<endl;
-                cout << "The elapsed time was %f seconds" << time << endl;
+                cout<< "\033[1;32m[ Distance ] \033[0m" << tour2.second << endl;
+                cout << "\033[1;33m[ The elapsed time was \033[0m" << time << "\033[1;33m seconds ]\033[0m" << endl << endl;
 
 
           break;
@@ -197,57 +189,134 @@ int menu::Terminal() {
 
                 time =  ( ( (double) clock() ) / CLOCKS_PER_SEC) - init_time;
 
-                cout << "Tour: ";
+                cout << "\033[1;32m[ Tour ] \033[0m";
                 for (const int& city : tour2.first) {
                     cout << city << " ";
                 }
                 cout << endl;
-                cout<<"Distance = "<<tour2.second<<endl;
-                cout << "The elapsed time was %f seconds" << time << endl;
+                cout<< "\033[1;32m[ Distance ] \033[0m" << tour2.second << endl;
+                cout << "\033[1;33m[ The elapsed time was \033[0m" << time << "\033[1;33m seconds ]\033[0m" << endl << endl;
 
 
           break;
       case 9:
           int select_file;
           if (chs_fl == 1) {
+              cout << "\033[1;33mPlease select the kind of file to be analyzed\033[0m" << endl;
+              cout << "\033[1;33m[ 1 ]\033[0m" << " RealWorld" << endl;
+              cout << "\033[1;33m[ 2 ]\033[0m" << " Extra" << endl;
+              cout << endl;
               cout << "\033[1;34mDecision: \033[0m";
               cin >> select_file;
+              cout << endl;
               if (select_file == 1) {
-                  cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl;
+                  cout << "\033[1;32mRealWorld chosen successfully\033[0m" << endl << endl;;
                   chs_fl = 2;
               }
-              else{
-                  cout << "\033[1;32mExtra chosen successfully\033[0m" << endl;
+              else if (select_file == 2){
+                  cout << "\033[1;32mExtra chosen successfully\033[0m" << endl << endl;;
                   chs_fl = 3;
+              }
+              else {
+                  chs_fl = 4;
               }
 
           }
           else if(chs_fl==2) {
+              cout << "\033[1;33mPlease select the kind of file to be analyzed\033[0m" << endl;
+              cout << "\033[1;33m[ 1 ]\033[0m" << " ToySets" << endl;
+              cout << "\033[1;33m[ 2 ]\033[0m" << " Extra" << endl;
+              cout << endl;
               cout << "\033[1;34mDecision: \033[0m";
               cin >> select_file;
+              cout << endl;
               if (select_file == 1) {
-                  cout << "\033[1;32mToyset chosen successfully\033[0m" << endl;
+                  cout << "\033[1;32mToyset chosen successfully\033[0m" << endl << endl;;
                   chs_fl = 1;
               }
-              else{
-                  cout << "\033[1;32mExtra chosen successfully\033[0m" << endl;
+              else if (select_file == 2){
+                  cout << "\033[1;32mExtra chosen successfully\033[0m" << endl << endl;;
                   chs_fl = 3;
               }
+              else {
+                  chs_fl = 4;
+              }
           }
-          else{
+          else if (chs_fl==3){
+              cout << "\033[1;33mPlease select the kind of file to be analyzed\033[0m" << endl;
+              cout << "\033[1;33m[ 1 ]\033[0m" << " ToySets" << endl;
+              cout << "\033[1;33m[ 2 ]\033[0m" << " RealWorld" << endl;
+              cout << endl;
               cout << "\033[1;34mDecision: \033[0m";
               cin >> select_file;
+              cout << endl;
               if (select_file == 1) {
-                  cout << "\033[1;32mToyset chosen successfully\033[0m" << endl;
+                  cout << "\033[1;32mToyset chosen successfully\033[0m" << endl << endl;
                   chs_fl = 1;
               }
-              else{
-                  cout << "\033[1;32mRealworld chosen successfully\033[0m" << endl;
+              else if (select_file == 2){
+                  cout << "\033[1;32mRealworld chosen successfully\033[0m" << endl << endl;
                   chs_fl = 2;
+              }
+              else {
+                  chs_fl = 4;
               }
           }
 
+                if (chs_fl == 1) {
+                    int toy;
+                    cout << "\033[1;33mPlease select the file\033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " shipping.csv" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " stadiums.csv" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " tourism.csv" << endl;
+                    cout << endl;
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin>>toy;
+                    cout<<endl;
+                    toyset.ReadLines(toy);
 
+                } else if (chs_fl == 2) {
+                    int real;
+                    cout << "\033[1;33mPlease select the file\033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " graph1" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " graph2" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " graph3" << endl;
+                    cout << endl;
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> real;
+                    cout << endl;
+                    hashNodes.Nodes_ReadLines(realworld, real);
+                    hashNodes.Graph_ReadLines(real, hashNodes, realworld);
+                }
+                else if(chs_fl==3){
+
+                    int extra;
+                    cout << "\033[1;33mPlease select the file\033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " 25edges" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " 400edges" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " 900edges" << endl;
+                    cout << endl;
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin >> extra;
+                    cout << endl;
+                    hashNodes.Nodes_ReadLines(realworld, extra+3);
+                    hashNodes.Graph_ReadLines(extra+3, hashNodes, realworld);
+                }
+                else {
+                    cout << "\033[1;33mUnrecognized answer - Proceeding with Toyset\033[0m" << endl;
+                    cout << endl;
+                    int toy;
+                    cout << "\033[1;32mToyset chosen successfully\033[0m" << endl << endl;
+                    cout << "\033[1;33mPlease select the file\033[0m" << endl;
+                    cout << "\033[1;33m[ 1 ]\033[0m" << " shipping.csv" << endl;
+                    cout << "\033[1;33m[ 2 ]\033[0m" << " stadiums.csv" << endl;
+                    cout << "\033[1;33m[ 3 ]\033[0m" << " tourism.csv" << endl;
+                    cout << endl;
+                    cout << "\033[1;34mDecision: \033[0m";
+                    cin>>toy;
+                    cout<<endl;
+                    toyset.ReadLines(toy);
+                }
 
           break;
       case 0:

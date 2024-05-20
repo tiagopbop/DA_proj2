@@ -150,12 +150,12 @@ void Toyset::backtrack(Graph<int>& graph) {
     backtrack_tsp(current_path, current_cost, visited, best_path, best_cost, 0, edge_weights);
 
     // Output the best path and its cost
-    cout << "Best Path: ";
+    cout << "\033[1;32m[ Best path ] \033[0m";
     for (int node : best_path) {
         cout << node << " ";
     }
     cout << "0" << endl; // Return to the starting node
-    cout << "Cost: " << best_cost << endl;
+    cout << "\033[1;32m[ Cost ] \033[0m" << best_cost << endl;
 }
 
 
